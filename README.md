@@ -1,120 +1,269 @@
-# Metasploit-for-reconnaissance
-# Metasploit
-Metasploit for reconnaissance in pentesting
+# Metasploit for Reconnaissance in Pentesting
 
-# AIM:
+---
+## NAME: JANANI SHREE A
+## REG NO: 212224100023
+---
+# AIM
 
-To get introduced to Metasploit Framework and to  perform reconnaissance  in pentesting .
+To get introduced to the Metasploit Framework and perform reconnaissance in penetration testing.
 
-## DESIGN STEPS:
+---
 
-### Step 1:
+# DESIGN STEPS
 
-Install kali linux either in partition or virtual box or in live mode
+### Step 1
 
-### Step 2:
+Install Kali Linux either in partition, virtual machine, or live mode.
 
-Investigate on the various categories of tools as follows:
+### Step 2
 
-### Step 3:
+Investigate the various categories of penetration testing tools.
 
-Open terminal and try execute some kali linux commands
+### Step 3
 
-## EXECUTION STEPS AND ITS OUTPUT:
+Open terminal and execute Kali Linux commands.
 
-Find out the ip address of the attackers system
-## OUTPUT:
+---
 
+# EXECUTION STEPS AND OUTPUT
 
-Invoke msfconsole:
-## OUTPUT:
+## 1. Finding the IP Address of the Attacker System
 
+### Command
 
-Type help or a question mark "?" to see the list of all available commands you can use inside msfconsole.
+```bash
+ifconfig
+```
 
+### Output
 
-
-
-Port Scanning:
-Following command is executed for scanning the systems on our local area network with a TCP scan (-sT) looking for open ports between 1 and 1000 (-p1-1000).
-msf >  nmap -sT 192.168.1810/24 -p1-1000  (Replace with appropriate IP Address)
-## OUTPUT:
-
-step4:
-use the db-nmap command to scan and save the results into Metasploit's postgresql attached database. In that way, you can use those results in the exploitation stage later.
-
-scan the targets with the command db_nmap as follows.
-msf > db_nmap 192.168.181.0/24
-## OUTPUT:
+<img width="848" height="367" alt="5 -1" src="https://github.com/user-attachments/assets/145a5ac7-6b4b-4329-8664-f61af5b385d1" />
 
 
+### Observation
 
-Metasploit has a multitude of scanning modules built in. If we open another terminal, we can navigate to Metasploit's auxiliary modules and list all the scanner modules.
-cd /usr/share /metasploit-framework/modules/auxiliary
-kali > ls -l
-## OUTPUT:
+* Shows network interfaces `eth0` and `lo`
+* `eth0` contains IPv4 address `10.0.2.15`
+* Loopback interface `lo` uses `127.0.0.1`
+* No packet loss or collisions detected
 
+---
 
+# 2. Invoking Metasploit Console
 
-Search is a powerful command in Metasploit that you can use to find what you want to locate. 
-msf >search name:Microsoft type:exploit
-## OUTPUT:
+### Command
 
+```bash
+msfconsole
+```
 
+### Output
 
-The info command provides information regarding a module or platform,
-
-Before beginning, set up the Metasploit database by starting the PostgreSQL server and initialize msfconsole database as follows:
-systemctl start postgresql
-msfdb init
-## OUTPUT:
-
-
+<img width="883" height="351" alt="5-2" src="https://github.com/user-attachments/assets/e8db2f10-cc51-43c9-8beb-5db4f305bb71" />
 
 
-## MYSQL ENUMERATION
-Find the IP address of the Metasploitable machine first. Then, use the db_nmap command in msfconsole with Nmap flags to scan the MySQL database at 3306 port.
-db_nmap -sV -sC -p 3306 <metasploitable_ip_address>
+### Observation
 
-## OUTPUT:
+* Metasploit Framework launched successfully
+* Exploits, payloads, and auxiliary modules loaded
+* Framework maintained by Rapid7
 
-Use the search option to look for an auxiliary module to scan and enumerate the MySQL database.
+---
+
+# 3. Displaying Help Menu
+
+### Command
+
+```bash
+help
+```
+
+### Output
+
+<img width="1732" height="943" alt="5-3" src="https://github.com/user-attachments/assets/5c732c7d-04f4-4b19-9452-cf87c99d721b" />
+
+
+### Observation
+
+* Help menu displays available Metasploit commands
+* Includes module handling, sessions, routing, and plugins
+* Useful for framework navigation
+
+---
+
+# 4. Port Scanning
+
+### Command
+
+```bash
+nmap -sT 10.0.2.0/24 -p1-1000
+```
+
+### Output
+
+<img width="746" height="449" alt="5-4" src="https://github.com/user-attachments/assets/444015c9-ad8c-474a-a8f0-e9558f65231e" />
+
+
+### Observation
+
+* TCP scan checks systems in local network range
+* Active hosts detected successfully
+* Ports identified as open, filtered, or closed
+
+---
+
+# 5. Database Initialization
+
+### Command
+
+```bash
+sudo msfdb reinit
+```
+
+### Output
+
+<img width="1098" height="326" alt="5-5" src="https://github.com/user-attachments/assets/d52f7444-bd64-4b37-9c79-32f7a097c9d3" />
+
+
+### Observation
+
+* PostgreSQL database initialized successfully
+* Metasploit database configuration completed
+* Initial schema generated
+
+---
+
+# 6. Searching Microsoft Exploits
+
+### Command
+
+```bash
+search name:Microsoft type:exploit
+```
+
+### Output
+
+<img width="808" height="421" alt="5-6" src="https://github.com/user-attachments/assets/0f17832b-854d-43b2-b37e-ca889f868a38" />
+
+
+### Observation
+
+* Displays Microsoft exploit modules
+* Includes IIS and SQL-related vulnerabilities
+* Shows exploit rank and disclosure dates
+
+---
+
+# 7. Searching MySQL Auxiliary Modules
+
+### Command
+
+```bash
 search type:auxiliary mysql
-## OUTPUT:
+```
+
+### Output
+
+<img width="721" height="190" alt="5-7" src="https://github.com/user-attachments/assets/f6532272-45be-4b6a-bdcb-ff1590d5217b" />
 
 
-use the auxiliary/scanner/mysql/mysql_version module by typing the module name or associated number to scan MySQL version details.
-use 11
-Or:
+### Observation
+
+* Lists MySQL auxiliary modules
+* Includes login scanners and version scanners
+* Useful for enumeration and testing
+
+---
+
+# 8. Loading MySQL Version Scanner
+
+### Command
+
+```bash
 use auxiliary/scanner/mysql/mysql_version
-## OUTPUT:
+```
+
+### Output
+
+<img width="1909" height="901" alt="5-8" src="https://github.com/user-attachments/assets/d8e24827-7fa4-40c6-8ef1-cba245491f3a" />
 
 
+### Observation
+
+* MySQL version scanner module loaded successfully
+* Targets remote MySQL services
+* Uses default port 3306
+
+---
+
+# 9. Configuring Target Host
+
+### Commands
+
+```bash
+set RHOSTS 10.0.2.15
+run
+```
+
+### Output
+
+<img width="1490" height="462" alt="5-9" src="https://github.com/user-attachments/assets/c2e9f4a8-cf17-4f10-81ce-3ab85aadc325" />
 
 
-Use the set rhosts command to set the parameter and run the module, as follows:
-## OUTPUT:
+### Observation
+
+* Target host configured successfully
+* Module executed against specified host
+* Scan completed without interruption
+
+---
+
+# 10. Loading MySQL Login Module
+
+### Command
+
+```bash
+use auxiliary/scanner/mysql/mysql_login
+```
+
+### Output
+
+<img width="1095" height="601" alt="5-10" src="https://github.com/user-attachments/assets/60dadd48-512d-4d6f-96fe-e6e3644c95b9" />
 
 
+### Observation
 
-After scanning, you can also brute force MySQL root account via Metasploit's auxiliary(scanner/mysql/mysql_login) module.
-## OUTPUT:
+* MySQL login module configured
+* Supports brute-force login attempts
+* Allows password wordlists and blank password testing
 
+---
 
+# 11. Configuring Wordlist and Running Module
 
+### Commands
 
-set the PASS_FILE parameter to the wordlist path available inside /usr/share/wordlists:
-set PASS_FILE /usr/share/wordlistss/rockyou.txt
-Then, specify the IP address of the target machine with the RHOSTS command.
-set RHOSTS <metasploitable-ip-address>
-Set BLANK_PASSWORDS to true in case there is no password set for the root account.
+```bash
+set PASS_FILE /usr/share/wordlists/rockyou.txt.gz
+set RHOSTS 10.0.2.15
 set BLANK_PASSWORDS true
-## OUTPUT:
+run
+```
+
+### Output
+
+<img width="1095" height="601" alt="5-10" src="https://github.com/user-attachments/assets/593d874f-42da-4685-9dc7-2d17ec8c0b87" />
 
 
+### Observation
 
+* Wordlist configured successfully
+* Blank password checking enabled
+* Authentication attempts performed against target host
 
+---
 
+# RESULT
 
-## RESULT:
-The Metasploit framework for reconnaissance is  examined successfully
+Thus the Metasploit Framework for reconnaissance in penetration testing was studied and executed successfully.
